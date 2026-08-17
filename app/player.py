@@ -29,6 +29,10 @@ class Player:
         """
         return self.__name
 
+    @name.setter
+    def name(self, new_name):
+        self.__name = new_name
+
     def __str__(self):
         """
         A string representation of the player.
@@ -37,3 +41,13 @@ class Player:
         str
         """
         return f"{self.uid} - {self.name}"
+
+    @staticmethod
+    def hash(key: str):
+        hash_key = 0
+        for char in key:
+            hash_key += int(ord(char))
+        return hash_key
+
+    def __hash__(self):
+        return self.hash(self.__uid)
