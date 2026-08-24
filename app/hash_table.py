@@ -5,7 +5,7 @@ from app.player_node import PlayerNode
 
 class PlayerHashMap:
     def __init__(self, table_size=10):
-        self.size = 0
+        self.size = len(self)
         self.__TABLE_SIZE = table_size
         self.__table = {i: PlayerList() for i in range(self.__TABLE_SIZE)}
 
@@ -50,7 +50,10 @@ class PlayerHashMap:
         return
 
     def __len__(self):
-        pass
+        size = 0
+        for hash_entry in self.__table.values():
+            size += len(hash_entry)
+        return size
 
     # def __hash(self, key):
     #     return hash(key) % self.__TABLE_SIZE
