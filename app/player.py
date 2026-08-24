@@ -42,8 +42,8 @@ class Player:
         """
         return f"{self.uid} - {self.name}"
 
-    @staticmethod
-    def hash(key: str):
+    @classmethod
+    def hash(cls, key: str) -> int:
         hash_key = 0
         for char in key:
             hash_key += int(ord(char))
