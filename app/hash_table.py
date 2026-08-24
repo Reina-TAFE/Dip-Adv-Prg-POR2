@@ -20,11 +20,8 @@ class PlayerHashMap:
         hashed_player_list = self.__table[index]  # Get PlayerList object at hashtable index
         # check for collisions
         if not hashed_player_list.is_empty():    # (PlayerList empty: no collisions | PlayerList not empty: collision)
-            # if there are collisions, check if key already exists in PlayerList
-            player_node = hashed_player_list.find(key)
-            if player_node is not None:
-                # if player exists in the PlayerList, update existing entry
-                player_node.player.name = value
+            # if there are collisions, attempt to update player
+            if hashed_player_list.update_by_key(key, value): # Successfully updated: True | Player not found: False
                 return
         # if player list is empty (no collisions), or player doesn't exist in player list
         # create new player object and insert at end of player list
