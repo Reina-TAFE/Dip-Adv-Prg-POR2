@@ -43,7 +43,14 @@ class PlayerHashMap:
         return None
 
     def __delitem__(self, key: str):
-        pass
+        index = self.get_index(key)                 # find hashtable index for key
+        hashed_player_list = self.__table[index]  # Get PlayerList object at hashtable index
+        deleted_node = hashed_player_list.delete_by_key(key)
+        if deleted_node is not None:
+            print(f"Successfully deleted player: {deleted_node.player}")
+        else:
+            print(f"No player found with key: {key}")
+        return
 
     def __len__(self):
         pass
