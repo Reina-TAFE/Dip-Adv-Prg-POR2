@@ -148,6 +148,14 @@ class PlayerList:
             return current
         return None
 
+    def update_by_key(self, key: str, value: str):
+        player_node = self.find(key)
+        if player_node is not None:
+            player_node.player.name = value
+            return True
+        return False
+
+
     def display(self, forward=True):
         """
         Prints all items in linked list. Prints from first to last by default (forward=True), or
