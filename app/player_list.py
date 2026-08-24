@@ -178,5 +178,13 @@ class PlayerList:
             current = current.next if forward else current.previous
         return True if forward else False
 
+    def __len__(self):
+        count = 0
+        current = self.first
+        while current is not None and current != self.last:
+            count += 1
+            current = current.next
+        return count
+
 
 
