@@ -44,10 +44,14 @@ class Player:
 
     @classmethod
     def hash(cls, key: str) -> int:
+        """
+        Arbitrary hashing function.
+        """
         hash_key = 0
-        for char in key:
-            hash_key += int(ord(char))
+        for i in range(len(key)):
+            hash_key += int(ord(key[i]) - i) * int(ord(key[-i]) + i)
         return hash_key
 
     def __hash__(self):
         return self.hash(self.__uid)
+
