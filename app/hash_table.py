@@ -16,7 +16,7 @@ class PlayerHashMap:
         """
         return self.__size
 
-    # player should not be able to set size manually
+    # User should not be able to set size manually
     #
     # @size.setter
     # def size(self, value):
@@ -43,18 +43,18 @@ class PlayerHashMap:
 
     def add_player(self, key: str, value: str):
         """
-                Updates the player in the hash table. Returns True if successfully updated,
-                else returns False.
+        Updates the player in the hash table. Returns True if successfully updated,
+        else returns False.
 
-                Parameters
-                ----------
-                key : str
-                value : str
+        Parameters
+        ----------
+        key : str
+        value : str
 
-                Returns
-                -------
-                True | False
-                """
+        Returns
+        -------
+        True | False
+        """
         return True if self.__setitem__(key, value) is True else False
 
     def update_player(self, key: str, value: str):
@@ -119,6 +119,17 @@ class PlayerHashMap:
         return False
 
     def get_player(self, key: str | Player) -> Player | None:
+        """
+        Finds and returns a player from the hash table by its id.
+
+        Parameters
+        ----------
+        key: str
+
+        Returns
+        -------
+        Player | None
+        """
         return self.__getitem__(key)
 
     def __getitem__(self, key: str | Player) -> Player | None:
@@ -143,6 +154,17 @@ class PlayerHashMap:
         return None
 
     def delete_player(self, key: str | Player) -> True | False:
+        """
+        Deletes the player from the hash table by its id.
+
+        Parameters
+        ----------
+        key : str | Player
+
+        Returns
+        -------
+        True | False
+        """
         return True if self.__delitem__(key) is True else False
 
     def __delitem__(self, key: str | Player) -> True | False:
@@ -156,7 +178,7 @@ class PlayerHashMap:
 
         Returns
         -------
-        int
+        True | False
         """
 
         index = self.get_index(key)                 # find hashtable index for key
@@ -187,6 +209,3 @@ class PlayerHashMap:
         for player_list in self.__table.values():
             size += len(player_list)
         return size
-
-    # def __hash(self, key):
-    #     return hash(key) % self.__TABLE_SIZE
