@@ -40,6 +40,22 @@ class TestPlayerHashMap(unittest.TestCase):
 
         self.assertEqual(result, True)
 
+    def test100Players(self):
+        test_hashmap = PlayerHashMap(table_size=10)
+        test_player_key = f"player-{75}"
+        test_player_name = "Extra Special Test Player"
+
+        for i in range(100):
+            test_hashmap.add_player(f"player-{i}", f"John Smith, {i}th of His Name!")
+
+        self.assertEqual(test_hashmap.length(), 100)
+        self.assertEqual(test_hashmap.size, 100)
+
+        result = test_hashmap.update_player(test_player_key, test_player_name)
+
+        self.assertEqual(result, True)
+        self.assertEqual(test_hashmap.get_player(test_player_key).name, test_player_name)
+
     def testUpdatePlayer(self):
         player_id = "player-1"
         player_name = "John Rivers"
