@@ -54,7 +54,7 @@ class PlayerList:
         PlayerNode | None
         """
         current = self.first
-        while current.next is not None:
+        while current is not None:
             if current.key == key:
                 return current
             else:
@@ -181,7 +181,7 @@ class PlayerList:
     def __len__(self):
         count = 0
         current = self.first
-        while current is not None and current != self.last:
+        while current is not None:
             count += 1
             current = current.next
         return count
