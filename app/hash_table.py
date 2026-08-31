@@ -60,7 +60,7 @@ class PlayerHashMap:
     def update_player(self, key: str, value: str):
         """
         Updates the player in the hash table. Returns True if successfully updated,
-        else raises a KeyError.
+        else returns False.
 
         Parameters
         ----------
@@ -69,12 +69,12 @@ class PlayerHashMap:
 
         Returns
         -------
-        True
+        True | False
         """
         if self.__setitem__(key, value, update_only=True) is True:
             return True
         else:
-            raise KeyError
+            return False
 
     def __setitem__(self, key: str, value: str, update_only=False) -> True | False :
         """
