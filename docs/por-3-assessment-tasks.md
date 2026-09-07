@@ -283,6 +283,7 @@ Add a separate test case to `test_player.py` to test your custom sorting algorit
 Include your code below:
 
 ```python
+from app.player import Player
 @classmethod
 def sort_quickly(cls, arr):
     if len(arr) <= 1:
@@ -351,7 +352,9 @@ Create a test case that tries to sort 1000 players that are already sorted.
 If you get a failure, include the failure below:
 
 ```text
-YOUR FAILURE HERE
+Ran 1 test in 0.102s
+
+OK
 ```
 
 ##### 5.3.4.1 Question: Why does the algorithm fail on presorted values?
@@ -360,13 +363,23 @@ Provide a reason why this test failed (if you got a recursion errors, you need t
 
 If your implementation did not fail, you must nevertheless explain why the senior developers algorithm has worse space complexity for presorted values.
 
-> Answer here
+> My algorithm passed because it sorts the list in-place by using list-comprehension lambdas to sort and pass the left 
+> and right subarrays by reference. The senior developers algorithm has worse spacial complexity because it creates 2 
+> new subarray instances for each recursive call of the function, which take up extra space in the memory. While this 
+> may not be an issue with smaller, unsorted data sets, when dealing with large, sorted data sets this may cause the program to
+> run out of memory due so many new objects being created.
+> 
 
 Propose a fix to your sorting algorithm that fixes this issue.
 
 ```python
-# YOUR FIX HERE
-# Highlight what the fix was
+from app.player import Player
+def sort_quickly(cls, arr):
+    ...
+    pivot = arr[0]
+    left = lambda array: [player for player in array if player >= pivot]
+    right = lambda array: [player for player in array if player < pivot]
+    return Player.sort_quickly(left(arr[1:])) + [pivot] + Player.sort_quickly(right(arr[1:]))
 ```
 
 #### 5.3.5. Success criteria

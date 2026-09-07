@@ -103,3 +103,11 @@ class TestPlayer(unittest.TestCase):
 
         self.assertListEqual(quickly_sorted_players, python_sorted_players)
 
+    def test_player_sort_quickly_worst_case(self):
+        import random
+        already_sorted_players = sorted([Player(f"{i:03}", f"Player {i}", score=random.randint(0, 1000)) for i in range(1000)], reverse=True)
+
+        quickly_sorted_players = Player.sort_quickly(already_sorted_players)
+
+
+        self.assertListEqual(quickly_sorted_players, already_sorted_players)
