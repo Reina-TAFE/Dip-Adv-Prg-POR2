@@ -118,5 +118,19 @@ class Player:
             return self.__score >= other.score
         return self.__score >= other
 
+    @classmethod
+    def sort_quickly(cls, arr):
+        if len(arr) <= 1:
+            return arr
+        pivot = arr[0]
+        left = lambda array: [player for player in array if player > pivot]
+        right = lambda array: [player for player in array if player < pivot]
+        # for x in arr[1:]:
+        #     if x < pivot:
+        #         left.append(x)
+        #     else:
+        #         right.append(x)
+        return Player.sort_quickly(left(arr[1:])) + [pivot] + Player.sort_quickly(right(arr[1:]))
+
 
 
