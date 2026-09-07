@@ -228,7 +228,47 @@ def sort_quickly(arr):
 
 What is the expected time and space complexity of the above algorithm? You can answer using big O or in plain English but in both cases you MUST justify your answer.
 
-> Answer here
+> The time and space complexity of the sorting algorithm will differ depending on the initial state of the array.
+> 
+> In the both the best and average case scenarios:
+> If 'N' represents the total number if items in the array, and on average the pivot is close to the median value of each subarray
+> in each recursion, the left and right lists will be of roughly similar lengths (2x subarrays of N<sub>k+1</sub>= ~((N-1)/2<sup>k</sup>), 
+> where k is number of recursions). <br>
+> This can be written in terms of the time complexity of N as: <br>
+> T(N) = N x T(1) + 2<sup>k</sup> x (N/2<sup>k</sup>), where 2<sup>k</sup>=N. <br>
+> → k = log<sub>2</sub>N <br>
+> → T(N) = N x T(1) + N x log<sub>2</sub>N
+> or T(N) = log<sub>2</sub>N x (N+1)
+> 
+> This can be written in Big O notation as: <br>
+> O(N x log N), <br>
+> and since the function loops log n times and creates 2 new subarray instances for each recursion,
+> the space complexity can be written as: <br>
+> O(2 x log N)
+>  
+> 
+> In a worst case scenario (such as an already sorted list with the pivot as either the start (lowest) or end (highest) of the array):
+> If all the values in the array are to one side of the pivot (all greater than the pivot, or all less than the pivot) for each recursion (k), 
+> the length one of the subarrays will be 0 while the length of the other subarray will be N-k.
+> 
+> This means that for each position (k) in the array of length 'N', the algorithm will run N - k times (N<sub>k+1</sub> = N<sub>k</sub> - 1). <br>
+> → T(N) = N - k
+> 
+> This can be written in terms of time complexity as: <br>
+> T(N) = N x (N - k) <br>
+> → 
+> or in Big O notation as: <br>
+> O(N<sup>2</sup>) <br>
+> 
+> Since in this case the function will be called 'N' times, 
+> and each recursion of the function creates 2 new subarrays (left and right), <br>
+> the space complexity can be written as: <br>
+> O(2N)
+> 
+> Although, in a perfect quick sort algorithm, the array would be sorted in-place
+> rather than creating new left and right subarray instances for each recursion. <br>
+> This means that a better implementation would have a space complexity of: <br>
+> O(1).
 
 ### 5.2. Task: Implement the custom sorting algorithm
 
