@@ -283,7 +283,14 @@ Add a separate test case to `test_player.py` to test your custom sorting algorit
 Include your code below:
 
 ```python
-# YOUR CUSTOM Sorting here
+@classmethod
+def sort_quickly(cls, arr):
+    if len(arr) <= 1:
+        return arr
+    pivot = arr[0]
+    left = lambda array: [player for player in array if player >= pivot]
+    right = lambda array: [player for player in array if player < pivot]
+    return Player.sort_quickly(left(arr[1:])) + [pivot] + Player.sort_quickly(right(arr[1:]))
 ```
 
 #### 5.2.3. Success criteria
@@ -300,10 +307,10 @@ The senior developer is impressed with your work and asks you to test your custo
 
 ```python
 import random
-from player import Player
+from app.player import Player
 
 
-players = [Player(f"Player {i}", uid=f"{i:03}", score=random.randint(0, 1000)) for i in range(1000)]
+players = [Player(f"{i:03}", f"Player {i}", score=random.randint(0, 1000)) for i in range(1000)]
 ```
 
 #### 5.3.1. Task: Create a test case to sort 1000 players
@@ -313,9 +320,17 @@ Using the code above as a starting point, create a test case to test your custom
 Include your test case below:
 
 ```python
+from app.player import Player
 
-# YOUR TEST CASE HERE
+def test_player_sort_quickly(self):
+    import random
+    players = [Player(f"{i:03}", f"Player {i}", score=random.randint(0, 1000)) for i in range(1000)]
 
+    quickly_sorted_players = Player.sort_quickly(players)
+
+    python_sorted_players = sorted(players, reverse=True)
+
+    self.assertListEqual(quickly_sorted_players, python_sorted_players)
 ```
 
 #### 5.3.2. Success criteria

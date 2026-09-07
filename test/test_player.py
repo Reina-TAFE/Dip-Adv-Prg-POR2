@@ -92,3 +92,14 @@ class TestPlayer(unittest.TestCase):
         self.assertTrue(bob < alice)
         # or, event better
         self.assertGreater(alice, bob)
+
+    def test_player_sort_quickly(self):
+        import random
+        players = [Player(f"{i:03}", f"Player {i}", score=random.randint(0, 1000)) for i in range(1000)]
+
+        quickly_sorted_players = Player.sort_quickly(players)
+
+        python_sorted_players = sorted(players, reverse=True)
+
+        self.assertListEqual(quickly_sorted_players, python_sorted_players)
+
