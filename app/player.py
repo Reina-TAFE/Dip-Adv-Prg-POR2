@@ -70,3 +70,53 @@ class Player:
         """
         return self.__repr__()
 
+    def __lt__(self, other):
+        """
+        Less Than.
+        """
+        if isinstance(other, Player):
+            return self.__score < other.score
+        return self.score < other
+
+    def __le__(self, other):
+        """
+        Less Than or Equal To.
+        """
+        if isinstance(other, Player):
+            return self.__score <= other.score
+        return self.__score <= other
+
+    def __eq__(self, other):
+        """
+        Equal To.
+        """
+        if isinstance(other, Player):
+            return self.__score == other.score
+        return self.__score == other
+
+    def __ne__(self, other):
+        """
+        Not Equal To.
+        """
+        if isinstance(other, Player):
+            return self.__score != other.score
+        return self.__score != other
+
+    def __gt__(self, other):
+        """
+        Greater Than.
+        """
+        if isinstance(other, Player):
+            return self.__score > other.score
+        return self.__score > other
+
+    def __ge__(self, other):
+        """
+        Greater Than or Equal To.
+        """
+        if isinstance(other, Player):
+            return self.__score >= other.score
+        return self.__score >= other
+
+
+

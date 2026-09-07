@@ -119,8 +119,8 @@ What is the **only** magic method that must be implemented in the player class f
 
 **Hint:** if you don't recall this from class, the error message you got when you ran the test will help you.
 -------
-> Answer Here
-> Yes, here - instead of this text!
+> The self.__lt__() is the only method required for the sorted() function to work, although PEP8
+> recommends explicitly defining all 6 rich comparison methods.
 -------
 #### 4.3.2. Task: Implement the magic method in the Player class
 
@@ -129,8 +129,8 @@ Add a test case to test_player to test the comparison operator you are about to 
 ```python
 def test_players_can_be_compared_by_score(self):
     # note: ensure initialization code is valid for **your** implementation
-    alice = Player("Alice", uid='01', score=10)
-    bob = Player("Bob", uid='02', score=5)
+    alice = Player('01',"Alice", score=10)
+    bob = Player('02',"Bob", score=5)
 
     # Add the appropriate expression to the following assert test
     self.assertTrue(<your comparison expression>)
@@ -141,7 +141,12 @@ def test_players_can_be_compared_by_score(self):
 Run the test and confirm that your error resembles the previous error
 
 ```text
-INSERT ERROR OUTPUT HERE
+Error
+Traceback (most recent call last):
+  File "C:\Users\20066312\source\repos\Dip-Adv-Prg-POR2\test\test_player.py", line 92, in test_players_can_be_compared_by_score
+    self.assertTrue(bob < alice)
+                    ^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'Player' and 'Player'
 ```
 
 - Implement the appropriate magic method in the Player class and ensure you pass this test
@@ -162,14 +167,26 @@ INSERT ERROR OUTPUT HERE
 Rerun `test_sort_players` does the test pass? If not, include the output below:
 
 ```text
-Your output here
+Failure
+Traceback (most recent call last):
+  File "C:\Users\20066312\source\repos\Dip-Adv-Prg-POR2\test\test_player.py", line 84, in test_sort_players
+    self.assertListEqual(sorted_players, manually_sorted_players)
+AssertionError: Lists differ: [Play[57 chars]'Alice', score=10), Player(uid='03', name='Charlie', score=15)] != [Play[57 chars]'Alice', score=10), Player(uid='03', name='Charlie', score=15)]
+
+First differing element 0:
+Player(uid='02', name='Bob', score=5)
+Player(uid='02', name='Bob', score=5)
+
+  [Player(uid='02', name='Bob', score=5),
+   Player(uid='01', name='Alice', score=10),
+   Player(uid='03', name='Charlie', score=15)]
 ```
 
 ##### 4.3.4.1 Question: why did the equality comparison fail?
 Why did the test fail (note: if it doesn't fail, it means there is something you have already done before you were asked to do so - if that's the case, you need to figure out what that is!)?
 -------
-> Answer here
->
+> The test failed because the Player class is only implementing the 'less than' dunder method. The test fails when it
+> tries to check if the lists are equal, since the player has not implemented an 'equal to' (__eq__) method.
 -------
 Add the necessary code to the Player class to ensure that the `test_sort_players` test passes.
 
