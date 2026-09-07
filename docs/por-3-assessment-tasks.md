@@ -395,7 +395,7 @@ def sort_quickly(cls, arr):
 Complete the following snippet before you submit:
 
 ```text
-I, <name and student number>, completed this work in class <room number>, on <date>, under the supervision of <assessor's name>.
+I, Reina Rowlands, completed this work in class 303, on 06/09/2026, under the supervision of Paraxial.
 ```
 
 Or (if not completed in class):
