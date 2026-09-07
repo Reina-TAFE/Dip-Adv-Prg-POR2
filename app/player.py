@@ -2,12 +2,13 @@ class Player:
     """
     A Player with a unique ID and name.
     """
-    def __init__(self, unique_id: str, player_name: str):
+    def __init__(self, unique_id: str, player_name: str, score: int = 0):
         """
         Constructor for Player object
         """
         self.__uid = unique_id
         self.__name = player_name
+        self.__score = score
 
     @property
     def uid(self):
@@ -33,14 +34,16 @@ class Player:
     def name(self, new_name):
         self.__name = new_name
 
-    def __str__(self):
-        """
-        A string representation of the player.
-        Returns
-        -------
-        str
-        """
-        return f"{self.uid} - {self.name}"
+    @property
+    def score(self):
+        return self.__score
+
+    @score.setter
+    def score(self, value):
+        if isinstance(value, int) and value >= 0:
+            self.__score = value
+        else:
+            raise ValueError
 
     @classmethod
     def hash(cls, key: str) -> int:
@@ -54,4 +57,16 @@ class Player:
 
     def __hash__(self):
         return self.hash(self.__uid)
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}(uid='{self.uid}', name='{self.name}', score={self.score})"
+
+    def __str__(self):
+        """
+        A string representation of the player.
+        Returns
+        -------
+        str
+        """
+        return self.__repr__()
 
