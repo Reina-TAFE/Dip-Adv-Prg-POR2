@@ -23,5 +23,5 @@ class PlayerBNode:
 
     @subtree_right.setter
     def subtree_right(self, value):
-        if value is not None and value != self.__subtree_right:
+        if isinstance(value, PlayerBNode) and value != self.__subtree_right:
             self.__subtree_right = value

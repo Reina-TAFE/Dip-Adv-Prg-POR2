@@ -19,6 +19,11 @@ class Player:
         """
         return self.__uid
 
+    @uid.setter
+    def uid(self, value):
+        if value is not None and self.__uid != value:
+            self.__uid = value
+
     @property
     def name(self):
         """
