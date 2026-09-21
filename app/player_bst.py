@@ -9,7 +9,7 @@ class PlayerBST:
     def root(self):
         return self.__root
 
-    def __find_self_or_parent(self, player: Player, current_node: PlayerBNode):
+    def __find_self_or_parent(self, name: str, current_node: PlayerBNode):
         """
         Finds a player's node based on its name. If a player with the same name is found,
         returns the existing node, else returns the parent node.
@@ -24,35 +24,54 @@ class PlayerBST:
         PlayerBNode
         """
         # check if player's name is less than/greater than/equal to player at current node
-        if player.name < current_node.player.name:
+        if name < current_node.player.name:
             if current_node.subtree_left is not None:
                 # if less than, recurse on left subtree
-                return self.__find_self_or_parent(player, current_node.subtree_left)
+                return self.__find_self_or_parent(name, current_node.subtree_left)
             # if left subtree is empty, parent found
-            return current_node
-        elif player.name > current_node.player.name:
+            return "parent", current_node
+        elif name > current_node.player.name:
             # if greater than, recurse on right subtree
             if current_node.subtree_right is not None:
-                return self.__find_self_or_parent(player, current_node.subtree_right)
+                return self.__find_self_or_parent(name, current_node.subtree_right)
             # if right subtree is empty, parent found
-            return current_node
+            return "parent", current_node
         else:
             # if equal, return match
-            return current_node
+            return "self", current_node
 
 
     def insert(self, player: Player):
+        # check tree has a root node
         if self.__root is not None:
-            parent = self.__find_self_or_parent(player, self.__root)
-            if player.name < parent.player.name:
-                parent.subtree_left = PlayerBNode(player)
-                print(parent.subtree_left.player)
-            elif player.name > parent.player.name:
-                parent.subtree_right = PlayerBNode(player)
-                print(parent.subtree_right.player)
-            else:
-                parent.player.uid = player.uid
-                print(parent.player)
-        else:
-            self.__root = PlayerBNode(player)
+            self_or_parent, node = self.__find_self_or_parent(player.name, self.__root)
+            if self_or_parent == "self": # node is self
+                # update node uid
+                node.player.uid = player.uid
+                print(node.player)
+            else: # node is parent
+                # set parent subtree to node
+                if player.name < node.player.name:
+                    node.subtree_left = PlayerBNode(player)
+                    print(node.subtree_left.player)
+                elif player.name > node.player.name:
+                    node.subtree_right = PlayerBNode(player)
+                    print(node.subtree_right.player)
+        else:  # tree has no root node
+            self.__root = PlayerBNode(player) # set tree root node
+
+    def search(self, player_name: str):
+        if self.__root is not None:
+            result, node = self.__find_self_or_parent(player_name, self.__root)
+            if result == "self" and node.player.name == player_name:
+                # if returned node is self, return node
+                return node
+        # if node is not found, return None
+        return None
+    #
+    # def search_player(self, player_name: str):
+    #     result = self.search_node(player_name)
+    #     if result is not None:
+    #         return result.player
+    #     return None
 
