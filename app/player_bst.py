@@ -75,7 +75,7 @@ class PlayerBST:
         subtree_left = []
         subtree_right = []
         if current_node.subtree_left is not None:
-            subtree_left = PlayerBNode.get_recursive_subtrees(current_node.subtree_left)
+            subtree_left = PlayerBST.get_recursive_subtrees(current_node.subtree_left)
         if current_node.subtree_right is not None:
             subtree_right = PlayerBST.get_recursive_subtrees(current_node.subtree_right)
         return subtree + subtree_left + subtree_right
