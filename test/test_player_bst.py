@@ -1,4 +1,6 @@
 import unittest
+from re import search
+
 from app.player_bst import PlayerBST, PlayerBNode, Player
 
 class TestPlayerBST(unittest.TestCase):
@@ -50,3 +52,26 @@ class TestPlayerBST(unittest.TestCase):
         self.assertEqual(root_left_right_player, jane)
         self.assertEqual(root_right_left_player, john)
         self.assertEqual(root_right_right_player, michael)
+
+    def test_search_player(self):
+        john = Player("007", "John")
+        michael = Player("002", "Michael")
+        james = Player("004", "James")
+        jane = Player("002", "Jane")
+        jessica = Player("008", "Jessica")
+        daphne = Player("003", "Daphne")
+        mary = Player("00", "Mary-Ann")
+
+        self.tree.insert(jessica)
+        self.tree.insert(james)
+        self.tree.insert(mary)
+        self.tree.insert(daphne)
+        self.tree.insert(michael)
+        self.tree.insert(jane)
+        self.tree.insert(john)
+
+        searched = self.tree.search("Michael")   # should return PlayerBNode(micheal)
+        failed_search = self.tree.search("Fred") # should return None
+
+        self.assertEqual(searched.player, michael)
+        self.assertEqual(failed_search, None)
