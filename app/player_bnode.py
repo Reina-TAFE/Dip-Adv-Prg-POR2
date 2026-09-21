@@ -14,7 +14,7 @@ class PlayerBNode:
 
     @subtree_left.setter
     def subtree_left(self, value):
-        if value is not None and value != self.__subtree_left:
+        if value is not None:
             self.__subtree_left = value
 
     @property
@@ -23,5 +23,9 @@ class PlayerBNode:
 
     @subtree_right.setter
     def subtree_right(self, value):
-        if isinstance(value, PlayerBNode) and value != self.__subtree_right:
+        if isinstance(value, PlayerBNode):
             self.__subtree_right = value
+
+    def __repr__(self):
+        return f"PlayerBNode(Player = {self.player})"
+
