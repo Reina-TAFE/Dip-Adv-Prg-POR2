@@ -2,8 +2,8 @@ from app.player import Player
 from app.player_bnode import PlayerBNode
 
 class PlayerBST:
-    def __init__(self):
-        self.__root = None
+    def __init__(self, root: PlayerBNode | None = None):
+        self.__root = root
 
     @property
     def root(self):
@@ -69,26 +69,56 @@ class PlayerBST:
         # if node is not found, return None
         return None
 
-    # def get_subtrees(self):
+    @classmethod
+    def get_recursive_subtrees(cls, current_node: PlayerBNode) -> list[PlayerBNode]:
+        subtree = [current_node]
+        subtree_left = []
+        subtree_right = []
+        if current_node.subtree_left is not None:
+            subtree_left = PlayerBNode.get_recursive_subtrees(current_node.subtree_left)
+        if current_node.subtree_right is not None:
+            subtree_right = PlayerBST.get_recursive_subtrees(current_node.subtree_right)
+        return subtree + subtree_left + subtree_right
 
     def get_balanced_bst(self):
-        def center(nodes):
-            return len(nodes) // 2
-        def left(nodes):
-            return nodes[:center(nodes)]
-        def right(nodes):
-            return nodes[center(nodes):]
+        def build_balanced_bst(nodes: list[Player]) -> PlayerBNode:
+            """Creates a new PlayerBNode from center player of a Player array.
+            Recursively creates left and right subtrees"""
+            def center(nodes_arr: list[Player]) -> int:
+                """Finds center position of Player array"""
+                return len(list(nodes_arr)) // 2 # return center index of array
 
-        root = nodes[center]
-        root.subtree_left = left[center(left)]
-        root.subtree_right = right[center(right)]
+            def left(l_nodes: list[Player]) -> list[Player]:
+                """Returns all node to the left of center."""
+                return l_nodes[:center(l_nodes)] # return all nodes from start to center - 1
+
+            def right(r_nodes: list[Player]) -> list[Player]:
+                """Returns all node to the right of center."""
+                return r_nodes[center(r_nodes)+1:] # return all nodes from center + 1 to end
+
+            balanced_node = PlayerBNode(nodes[center(nodes)]) # create new node from center player
+
+            if len(left(nodes)) >= 1: # check if any players less than
+                # set left subtree to center of left players (less than)
+                balanced_node.subtree_left = build_balanced_bst(left(nodes)) # recurse on left players to get center
+            if len(right(nodes)) >= 1: # check if any players greater than
+                # set right subtree to center of right players (greater than)
+                balanced_node.subtree_right = build_balanced_bst(right(nodes)) # recurse on right players to get center
+            return balanced_node # return balanced node
+
         if self.__root is not None:
-            tree = PlayerBNode.get_recursive_subtrees(self.__root)
-            tree.sort(key=lambda node: node.player.name)
+            # get list of all nodes starting from root
+            tree = PlayerBST.get_recursive_subtrees(self.__root)
+            # get sorted list of players
+            sorted_players = [node.player for node in sorted(tree, key=lambda node: node.player.name)]
+            # create new PlayerBST using balanced root node from sorted player list
+            balanced_bst = PlayerBST(root=build_balanced_bst(sorted_players))
+            return balanced_bst
+        return self # if PlayerBST is empty, return self
 
 
 
-        return subtree
+
     #
     # def search_player(self, player_name: str):
     #     result = self.search_node(player_name)
