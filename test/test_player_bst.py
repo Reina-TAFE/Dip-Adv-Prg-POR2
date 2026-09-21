@@ -78,25 +78,36 @@ class TestPlayerBST(unittest.TestCase):
 
     def test_get_subtrees(self):
         john = Player("007", "John")
-        michael = Player("002", "Michael")
+        michael = Player("003", "Michael")
         james = Player("004", "James")
         jane = Player("002", "Jane")
-        jessica = Player("008", "Jessica")
-        daphne = Player("003", "Daphne")
-        mary = Player("00", "Mary")
-
-        self.tree.insert(james)
+        jessica = Player("005", "Jessica")
+        daphne = Player("006", "Daphne")
+        mary = Player("001", "Mary")
+        
+        self.tree.insert(mary)
+        self.tree.insert(jane)
+        self.tree.insert(daphne)
         self.tree.insert(john)
         self.tree.insert(jessica)
-        self.tree.insert(mary)
         self.tree.insert(michael)
-        self.tree.insert(daphne)
-        self.tree.insert(jane)
+        self.tree.insert(james)
+        
+        manually_balanced_tree = PlayerBST()
+        manually_balanced_tree.insert(jessica)
+        manually_balanced_tree.insert(james)
+        manually_balanced_tree.insert(mary)
+        manually_balanced_tree.insert(daphne)
+        manually_balanced_tree.insert(michael)
+        manually_balanced_tree.insert(jane)
+        manually_balanced_tree.insert(john)
 
+        
+        balanced_tree = self.tree.get_balanced_bst()
 
-        subtrees = self.tree.get_balanced_bst()
+        balanced_subtrees = PlayerBST.get_recursive_subtrees(balanced_tree.root)
+        manually_balanced_subtrees = PlayerBST.get_recursive_subtrees(manually_balanced_tree.root)
 
-        sorted_subtrees = sorted(subtrees, key=lambda node: node.player.name)
-
-        for item in sorted_subtrees:
-            print(item)
+        for index in range(len(manually_balanced_subtrees)):
+            self.assertIsInstance(manually_balanced_subtrees[index], PlayerBNode)
+            self.assertEqual(balanced_subtrees[index].player, manually_balanced_subtrees[index].player)
