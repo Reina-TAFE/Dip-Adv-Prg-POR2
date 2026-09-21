@@ -68,6 +68,27 @@ class PlayerBST:
                 return node
         # if node is not found, return None
         return None
+
+    # def get_subtrees(self):
+
+    def get_balanced_bst(self):
+        def center(nodes):
+            return len(nodes) // 2
+        def left(nodes):
+            return nodes[:center(nodes)]
+        def right(nodes):
+            return nodes[center(nodes):]
+
+        root = nodes[center]
+        root.subtree_left = left[center(left)]
+        root.subtree_right = right[center(right)]
+        if self.__root is not None:
+            tree = PlayerBNode.get_recursive_subtrees(self.__root)
+            tree.sort(key=lambda node: node.player.name)
+
+
+
+        return subtree
     #
     # def search_player(self, player_name: str):
     #     result = self.search_node(player_name)

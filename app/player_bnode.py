@@ -26,6 +26,18 @@ class PlayerBNode:
         if isinstance(value, PlayerBNode):
             self.__subtree_right = value
 
+    @classmethod
+    def get_recursive_subtrees(cls, current_node):
+        subtree = [current_node]
+        subtree_left = []
+        subtree_right = []
+        if current_node.subtree_left is not None:
+            subtree_left = PlayerBNode.get_recursive_subtrees(current_node.subtree_left)
+        if current_node.subtree_right is not None:
+            subtree_right = PlayerBNode.get_recursive_subtrees(current_node.subtree_right)
+        return subtree_left + subtree + subtree_right
+
+
     def __repr__(self):
         return f"PlayerBNode(Player = {self.player})"
 

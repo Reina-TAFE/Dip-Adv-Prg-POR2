@@ -75,3 +75,28 @@ class TestPlayerBST(unittest.TestCase):
 
         self.assertEqual(searched.player, michael)
         self.assertEqual(failed_search, None)
+
+    def test_get_subtrees(self):
+        john = Player("007", "John")
+        michael = Player("002", "Michael")
+        james = Player("004", "James")
+        jane = Player("002", "Jane")
+        jessica = Player("008", "Jessica")
+        daphne = Player("003", "Daphne")
+        mary = Player("00", "Mary")
+
+        self.tree.insert(james)
+        self.tree.insert(john)
+        self.tree.insert(jessica)
+        self.tree.insert(mary)
+        self.tree.insert(michael)
+        self.tree.insert(daphne)
+        self.tree.insert(jane)
+
+
+        subtrees = self.tree.get_balanced_bst()
+
+        sorted_subtrees = sorted(subtrees, key=lambda node: node.player.name)
+
+        for item in sorted_subtrees:
+            print(item)
