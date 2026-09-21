@@ -27,13 +27,13 @@ class PlayerBST:
         if player.name < current_node.player.name:
             if current_node.subtree_left is not None:
                 # if less than, recurse on left subtree
-                self.__find_self_or_parent(player, current_node.subtree_left)
+                return self.__find_self_or_parent(player, current_node.subtree_left)
             # if left subtree is empty, parent found
             return current_node
         elif player.name > current_node.player.name:
             # if greater than, recurse on right subtree
             if current_node.subtree_right is not None:
-                self.__find_self_or_parent(player, current_node.subtree_right)
+                return self.__find_self_or_parent(player, current_node.subtree_right)
             # if right subtree is empty, parent found
             return current_node
         else:
