@@ -103,10 +103,10 @@ def sha256_hash(key: str, size: int) -> int:
 > 
 > ### Pearson Hash
 > Advantages:
-> - Highly efficient, especially on 8-bit processors
+> - Highly efficient, especially on 8-bit processors due to the use of a 256-byte permutation table
 > - Good uniformity if permutation table is truly random
 > - Strictly deterministic given the same permutation table and input
-> - Good collision resistance for natural (accidental) collisions using reg
+> - Good collision resistance for natural (accidental) collisions when dealing with psuedo-random data  
 > - Highly sensitive to changes in input due to the use of iterative XOR and permutation table operations
 > 
 > Disadvantages:
@@ -145,11 +145,44 @@ def sha256_hash(key: str, size: int) -> int:
 
 4. Which of the above hash functions would you choose to implement the requirements of the task? Why?
 
-> Your answer here
+> Since the requirements of this task do not require cryptographic security, I would pick the built=in python hash() function
+> as it provides high efficiency and uniformity when using string inputs such as player's uids. Since the hashmap is not being
+> stored between executions, determinism only needs to be consistent within a single execution session.
 
 5. In your own words, explain each line in the pearson hash function above in terms of the criteria you listed in question 2.
+```python
+import random
+random.seed(42) #1
 
-> Your answer here
+pearson_table = list(range(256)) #2
+random.shuffle(pearson_table) #3
+
+def pearson_hash(key: str, size: int) -> int:
+    hash_ = 0 #4
+    for char in key: #5
+        hash_ = pearson_table[hash_ ^ ord(char)] #6
+    return hash_ % size #7
+```
+> #1 - The first line imports python's 'random' library, which provides methods for generating psuedo-random numbers.
+> <br>
+> #2 - The second line sets to seed of the instance of the random library to a known value to ensure determinism remains consistent
+> between executions.
+> <br>
+> #3 - This line generates a list of all values from 0-255 in order.
+> <br>
+> #4 - This line uses the random library to shuffle the list into a psuedo-random order based on the seed. This creates
+> a consistent permutation table of randomly arranged 256 byte values, which determines the uniformity of the hashmap/
+> <br>
+> #5 - This line iterates through each character in the key in order, ensuring all characters in the key contribute to the final hash_ value
+> This helps to ensure the key-length and character order contribute to the input-sensitivity of the algorithm.
+> <br>
+> #6 - This line uses a binary XOR operation to calculate the position of the permutation table to set the hash_ value to next. 
+> This provides good uniformity and input-sensitivity by allowing the previous characters' hashes to greatly affect the hash of the subsequent characters.
+> This process is extremely efficient as it requires very little computation, especially on 8-bit processors due to their 256-byte nature
+> <br>
+> #7 - This line modulos the final calculated hash value by the table size to map the key to a position within the table,
+> 
+> 
 
 6. Write pseudocode of how you would store Players in PlayerLists in a hash map.
 
