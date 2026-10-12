@@ -16,7 +16,7 @@ class PlayerBST:
 
         Parameters
         ----------
-        player : Player
+        name : str
         current_node : PlayerBNode
 
         Returns
@@ -29,23 +29,23 @@ class PlayerBST:
                 # if less than, recurse on left subtree
                 return self.__find_self_or_parent(name, current_node.subtree_left)
             # if left subtree is empty, parent found
-            return "parent", current_node
+            return current_node # parent
         elif name > current_node.player.name:
             # if greater than, recurse on right subtree
             if current_node.subtree_right is not None:
                 return self.__find_self_or_parent(name, current_node.subtree_right)
             # if right subtree is empty, parent found
-            return "parent", current_node
+            return current_node # parent
         else:
             # if equal, return match
-            return "self", current_node
+            return current_node # self
 
 
     def insert(self, player: Player):
         # check tree has a root node
         if self.__root is not None:
-            self_or_parent, node = self.__find_self_or_parent(player.name, self.__root)
-            if self_or_parent == "self": # node is self
+            node = self.__find_self_or_parent(player.name, self.__root)
+            if node.player.name == player.name: # node is self
                 # update node uid
                 node.player.uid = player.uid
                 print(node.player)
@@ -62,8 +62,8 @@ class PlayerBST:
 
     def search(self, player_name: str):
         if self.__root is not None:
-            result, node = self.__find_self_or_parent(player_name, self.__root)
-            if result == "self" and node.player.name == player_name:
+            node = self.__find_self_or_parent(player_name, self.__root)
+            if node.player.name == player_name:
                 # if returned node is self, return node
                 return node
         # if node is not found, return None
