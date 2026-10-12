@@ -73,15 +73,75 @@ def sha256_hash(key: str, size: int) -> int:
 
 1. All of the above functions are hash functions. Explain how so - what key properties do they all share?
 
-> Your answer here
+> All of these functions are hashing functions as they all can take an arbitrarily sized input, and map in onto a fixed sized output. 
 
 2. What are the advantages and disadvantages of each of the above hash functions? Evaluate in terms of uniformity, determinism, efficiency, collision resistance, sensitivity to input changes, and security[1](#Reference). You may need to do some reasearch to answer this question 😱
 
-> Your answer here
+> ### SSH:
+> Advantages:
+> - Simple
+> - High determinism since all inputs return the same output
+> - Very efficient since only 1 step is performed
+> 
+> Disadvantages:
+> - Poor uniformity as all inputs will return the same output
+> - No collision resistance
+> - Zero sensitivity to changes in input
+> - No security
+> 
+> ### sum_of_ascii_values
+> Advantages:
+> - Efficient to run since the number of steps is equal to the length of the input
+> 
+> Disadvantages:
+> - Poor collision resistance since many letter combinations will produce the same output
+> - Low sensitivity to changes in input since changing 1 letter can only shift the output value by a maximum of 25
+> - Low determinism since ascii values are case-sensitive, so capitalisation of the input can affect the output
+> - Poor uniformity and collision resistance since common letter combinations can cause outputs to cluster around certain ranges of values, especially since the order/arrangement of the letter doesn't affect the output.
+> - Zero security as outputs are easily reversible and predictable since it relies on simple linear addition.
+> 
+> 
+> ### Pearson Hash
+> Advantages:
+> - Highly efficient, especially on 8-bit processors
+> - Good uniformity if permutation table is truly random
+> - Strictly deterministic given the same permutation table and input
+> - Good collision resistance for natural (accidental) collisions using reg
+> - Highly sensitive to changes in input due to the use of iterative XOR and permutation table operations
+> 
+> Disadvantages:
+> - uniformity relies on the randomness of the 256-byte permutation table. 
+> - Poor cyptographic security since it provides no protections or resistance against malicious collision generation
+> - Limited maximum table size (max size of 256)
+> 
+> ### Built-in Hash
+> Advantages:
+> - Designed to be highly efficient for 64-bit systems
+> - Highly uniform for String, Byte, and Datetime inputs
+> 
+> Disadvantages:
+> - Uniformity and input sensitivity highly dependent of the data type of the input 
+> - Integer inputs provide zero uniformity, as they hash to themselves
+> - Not cryptographically secure
+> - Only deterministic within a single execution session, outputs will change next time program is run
+> - No collision resistance
+> 
+> ### SHA-2 Hash
+> Advantages:
+> - Extremely high cryptographic security, collision resistance, and input sensitivity
+> - Roughly uniform output distribution
+> - Moderately efficient, while remaining cryptographically secure
+> - Strictly deterministic across all systems in instances
+> 
+> Disadvantages:
+> - Slower than other non-cryptographically secure alternatives
+> 
 
 3. List the three most important attributes (arranged from most to least) in the context of a hash map? Justify your answer.
 
-> Your answer here
+> Determinism - Determinism is the most important aspect of a hashing algorithm since if the same input doesn't produce a consistent output, then it would be impossible to retrieve the correct item from the hash table.
+> Efficiency - Efficiency is one of the main benefits that hashmaps provide over other data structures such as linked lists or BSTs. If a hashing algorithm is inefficient, then it loses the main benefit it holds over alternative data structures
+> Uniformity - Good uniformity ensures keys are distributed evenly across the available slots. If uniformity is poor, it can cause keys to cluster or collide which negatively impacts efficiency
 
 4. Which of the above hash functions would you choose to implement the requirements of the task? Why?
 
